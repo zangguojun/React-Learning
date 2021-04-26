@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hello_react</title>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script src="../js/prop-types.js"></script>
+  <style>
+    .black {
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/babel">
+    class Person extends React.Component{
+      showData = () => {
+        const {input1} = this
+        console.log(input1.value)
+      }
+      changeWeather = () => {
+        let {isHot} = this.state
+        this.setState({isHot:!isHot}) 
+      }
+      // 类绑定函数
+      saveInput = (c) => {
+        this.input1 = c
+        console.log('@')
+      }
+
+      state = {isHot:false}
+
+      render(){
+        const {isHot} = this.state
+        return (
+          <div>
+            <h2>{isHot ? '炎热' : '凉爽'}</h2>
+            {/*内联函数*/}
+            {/*<input type="text" ref={c => {this.input1 = c; console.log('@',c)}}/>*/}
+            <input type="text" ref={this.saveInput}/>
+            <br/>
+            <br/>
+            <button onClick={this.showData}>showData</button>
+            <button onClick={this.changeWeather}>changeWeather</button>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Person />,document.getElementById('test'))
+
+  </script>
+</body>
+</html>
