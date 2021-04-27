@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../new_js/react.development.js"></script>
+  <script src="../new_js/react-dom.development.js"></script>
+  <script src="../new_js/babel.min.js"></script>
+  <script src="../new_js/prop-types.js"></script>
+  <title>Document</title>
+  <style>
+    .list {
+      width: 200px;
+      height: 150px;
+      background-color: aqua;
+      overflow: auto;
+    }
+    .new {
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/babel">
+  class News extends React.Component {
+    state = {
+      newsArr:[]
+    }
+    componentDidMount () {
+      this.timer = setInterval(() => {
+        const {newsArr} = this.state
+        const news = `新闻${newsArr.length + 1}`
+        this.setState({
+          newsArr:[news,...newsArr]
+        })
+      }, 1000);
+    }
+    
+    getSnapshotBeforeUpdate () {
+      console.log(this.refs.list.scrollHeight);
+      return this.refs.list.scrollHeight
+    }
+
+    componentDidUpdate (preProps,preState,height) {
+      console.log(this.refs.list.scrollHeight - height);
+      this.refs.list.scrollTop += this.refs.list.scrollHeight - height
+    }
+
+    stop = () => {
+      clearInterval(this.timer)
+    }
+    render() {
+      return (
+      <div>
+        <div className="list" ref="list">
+          {
+            this.state.newsArr.map(
+              (n,index) => <div className="news" key={index}>{n}</div>
+            )
+          }
+        </div>
+        <button onClick={this.stop}>Stop</button>
+      </div>
+      )
+    }
+  }
+  ReactDOM.render(<News/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

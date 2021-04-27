@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hello_react</title>
+  <script src="../new_js/react.development.js"></script>
+  <script src="../new_js/react-dom.development.js"></script>
+  <script src="../new_js/babel.min.js"></script>
+  <script src="../new_js/prop-types.js"></script>
+</head>
+<body>
+  <div id="test"></div>
+  <hr/>
+  <hr/>
+  <div id="test1"></div>
+
+  <script type="text/babel">
+  class Count extends React.Component{
+    constructor(props) {
+      console.log('constructor...');
+      super(props);
+    }
+    
+    state = {
+      count:0
+    }
+
+    add = () => {
+      let {count} = this.state
+      count += 1
+      this.setState({count})
+    }
+    will = () => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+    }
+    force = () => {
+      this.forceUpdate()
+    }
+
+    UNSAFE_componentWillMount() {
+      console.log('componentWillMount...');
+    }
+    componentDidMount() {
+      console.log('componentDidMount...');
+    }
+
+    componentWillUnmount() {
+      console.log('componentWillUnmount...');
+    }
+
+    shouldComponentUpdate() {
+      console.log('shouldComponentUpdate...');
+      return true
+    }
+    UNSAFE_componentWillUpdate() {
+      console.log('componentWillUpdate...');
+    }
+    componentDidUpdate() {
+      console.log('componentDidUpdate...');
+    }
+
+    render(){
+      console.log('render...');
+      const {count} = this.state 
+      return (
+        <div>
+          <h2>Count:{count}</h2>
+          <button onClick={this.add}>Click(+1)</button>
+          <button onClick={this.will}>Over</button>
+          <button onClick={this.force}>Force</button>
+        </div>
+      )
+    }
+  }
+  class A extends React.Component {
+    state = {
+      carName : '奔驰'
+    }
+    changeCar = () => {
+      this.setState({
+        carName:'奥迪'
+      })
+    }
+    render() {
+      const {carName} = this.state
+      return (
+        <div>
+          <div>A</div>
+          <button onClick={this.changeCar}>换车</button>
+          <B carName={carName}></B>
+        </div>
+      )
+    }
+  }
+  class B extends React.Component {
+    UNSAFE_componentWillReceiveProps = (props) => {
+      console.log('B-componentWillReceiveProps',props);
+    }
+    render() {
+      console.log('render');
+      const {carName} = this.props
+      return (
+        <div>
+          <div>B</div>
+          <div>{carName}</div>
+        </div>
+      )
+    }
+  }
+
+  ReactDOM.render(<Count/>,document.getElementById('test'))
+  ReactDOM.render(<A/>,document.getElementById('test1'))
+  </script>
+</body>
+</html>
