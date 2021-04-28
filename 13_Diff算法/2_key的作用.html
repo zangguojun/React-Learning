@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hello_react</title>
+  <script src="../new_js/react.development.js"></script>
+  <script src="../new_js/react-dom.development.js"></script>
+  <script src="../new_js/babel.min.js"></script>
+  <script src="../new_js/prop-types.js"></script>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/babel">
+    class Person extends React.Component {
+      state = {
+        persons: []
+      }
+      begin = ()=> {
+        this.timer = setInterval(() => {
+          const {persons} = this.state
+          const newPersonId = persons.length + 1 
+          const newPerson = {
+            id:newPersonId,
+            name:`${newPersonId}号`
+          }
+          this.setState({
+            persons:[newPerson,...persons]
+            // persons:[...persons,newPerson]
+          })
+        }, 1000);
+      }
+      stop = ()=>{
+        clearInterval(this.timer)
+      }
+      render () {
+        return (
+          <ul>
+            <button onClick={this.begin}>Begin</button>
+            <button onClick={this.stop}>Stop</button>
+            {
+              this.state.persons.map((cur,index) => 
+              // <li key={index}>
+              <li key={cur.id}>
+                {cur.name}
+                <input type="text"/>
+              </li>
+              )
+            }
+          </ul>
+        )
+      }
+    }
+    ReactDOM.render(<Person/>,document.getElementById('test'))
+  </script>
+</body>
+</html>
