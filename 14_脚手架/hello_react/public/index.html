@@ -8,7 +8,19 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="stylesheet" href="./css/bootstrap.css">
+    <!-- 导致样式丢失 -->
+    <!-- <link rel="stylesheet" href="./css/bootstrap.css"> -->
+
+    <!-- 解决方案一 -->
+    <!-- <link rel="stylesheet" href="/css/bootstrap.css"> -->
+
+    <!-- 解决方案二 -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap.css">
+    
+    <!-- 解决方案三 -->
+    <!-- 使用Hash的路由模式 (少见)-->
+
+
     <title>React App</title>
   </head>
   <body>
