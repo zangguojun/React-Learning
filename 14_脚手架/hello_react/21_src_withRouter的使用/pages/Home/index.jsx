@@ -6,6 +6,15 @@ import Message from './Message'
 import News from './News'
 
 export default class Home extends Component {
+  
+  componentDidMount () {
+    this.timer = setTimeout(() => {
+      this.props.history.push('/home/message')
+    }, 2000);
+  }
+  componentWillUnmount () {
+    clearTimeout(this.timer)
+  }
   render() {
     return (
       <div>
