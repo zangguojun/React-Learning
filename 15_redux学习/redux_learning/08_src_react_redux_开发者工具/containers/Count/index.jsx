@@ -2,31 +2,31 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 
 import { 
-  increment,
-  decrement,
-  incrementAsync
+  createDecrementAction,
+  createIncrementAction,
+  createIncrementAsyncAction
  } from '../../redux/actions/count'
 
  class Count extends Component {
  
    increment = () => {
      const {value} = this.selectNumber
-     this.props.increment(value * 1)
+     this.props.jia(value * 1)
    }
    decrement = () => {
      const {value} = this.selectNumber
-     this.props.decrement(value * 1)
+     this.props.jian(value * 1)
  
    }
    incrementIfOdd = () => {
      const {value} = this.selectNumber
      if (this.props.count % 2 !== 0) {
-       this.props.increment(value * 1)
+       this.props.jia(value * 1)
      }
    }
    incrementAsync = () => {
      const {value} = this.selectNumber
-     this.props.incrementAsync(value * 1, 500)
+     this.props.asyncjia(value * 1, 500)
    }
  
    render() {
@@ -50,13 +50,13 @@ import {
  
 const mapStateToProps = (state) => ({
   count:state.count,
-  personNum:state.persons.length
+  personNum:state.person.length
 })
 
 const mapDispatchToProps = {
-  increment,
-  decrement,
-  incrementAsync,
+  jia: createIncrementAction,
+  jian: createDecrementAction,
+  asyncjia: createIncrementAsyncAction,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Count)

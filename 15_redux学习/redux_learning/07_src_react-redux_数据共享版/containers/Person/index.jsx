@@ -1,9 +1,7 @@
 import { nanoid } from 'nanoid'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { 
-  addPerson
- } from '../../redux/actions/person'
+import { createAddPersonAction } from '../../redux/actions/person'
 
 class Person extends Component {
   addPerson = () => {
@@ -36,12 +34,12 @@ class Person extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  persons:state.persons,
+  persons:state.person,
   count:state.count
 })
 
 const mapDispatchToProps = {
-  addPerson
+  addPerson:createAddPersonAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Person)
